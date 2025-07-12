@@ -5,7 +5,15 @@ import McdonaldsEnvironment from './McdonaldsEnvironment'
 import Enemy from './Enemy'
 import { useGame } from '../contexts/GameContext'
 
-export default function GameScene() {
+interface GameSceneProps {
+  playerRef: React.RefObject<{
+    handleMobileMove: (direction: { x: number, z: number }) => void
+    handleMobileJump: () => void
+    handleMobileRun: (running: boolean) => void
+  }>
+}
+
+export default function GameScene({ playerRef }: GameSceneProps) {
   const { gameState } = useGame()
 
   return (
@@ -31,7 +39,7 @@ export default function GameScene() {
         <McdonaldsEnvironment />
         
         {/* Player */}
-        <Player />
+        <Player ref={playerRef} />
         
         {/* Enemies */}
         <Enemy position={[10, 1, 5]} type="ronald" />
